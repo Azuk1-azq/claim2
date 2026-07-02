@@ -13,8 +13,9 @@
     --pp-red-deep: #DB0027;
     --ink: #1C1C22;
     --sub: #6B6B76;
+    --sub2: #9A9AA4;
     --line: #ECECF0;
-    --bg: #F4F4F7;
+    --bg: #EDEEF2;
     --card: #ffffff;
     --green: #17B26A;
     --gold: #FFC93C;
@@ -34,91 +35,213 @@
     width:100%;
     height:100vh;
     display:flex;
-    align-items:flex-start;
+    align-items:center;
     justify-content:center;
+    padding:18px 0;
   }
-  .app{
+  .phone{
     width:100%;
-    max-width:420px;
+    max-width:400px;
     height:100%;
+    max-height:844px;
     background:var(--card);
+    border-radius:28px;
     display:flex;
     flex-direction:column;
-    box-shadow: 0 0 40px rgba(0,0,0,.08);
+    box-shadow: 0 2px 8px rgba(20,21,43,.06), 0 24px 60px rgba(20,21,43,.22);
     position:relative;
     overflow:hidden;
+    border:1px solid rgba(20,21,43,.06);
+  }
+
+  /* ---------- app shell ---------- */
+  .app{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
   }
   .appbar{
     display:flex;
     align-items:center;
     gap:10px;
-    padding:16px 18px;
+    padding:14px 18px;
     border-bottom:1px solid var(--line);
     flex-shrink:0;
   }
   .appbar .mark{
-    width:30px; height:30px;
+    width:28px; height:28px;
     background: var(--pp-red);
-    border-radius:9px;
+    border-radius:8px;
     display:flex; align-items:center; justify-content:center;
-    font-size:15px;
+    font-size:14px;
     color:#fff;
     font-weight:900;
   }
-  .appbar .name{ font-weight:700; font-size:14.5px; }
+  .appbar .name{ font-weight:700; font-size:14px; }
   .appbar .badge{
     margin-left:auto;
     font-size:10.5px;
-    color:var(--sub);
-    border:1px solid var(--line);
-    padding:3px 8px;
+    color:var(--pp-red-deep);
+    background:#FFF0F2;
+    padding:4px 9px;
     border-radius:20px;
+    font-weight:700;
   }
 
+  .progress-dots{
+    display:flex; gap:5px; padding:10px 18px 0;
+    flex-shrink:0;
+  }
+  .progress-dots .dot{
+    flex:1; height:3px; border-radius:3px;
+    background: var(--line);
+    transition: background .3s ease;
+  }
+  .progress-dots .dot.done{ background: var(--pp-red); }
+
+  /* ---------- screen container ---------- */
+  .screen-container{
+    flex:1;
+    position:relative;
+    min-height:0;
+    overflow:hidden;
+  }
   .screen{
     position:absolute;
     inset:0;
-    top:63px;
     display:flex;
     flex-direction:column;
     opacity:0;
     pointer-events:none;
-    transition: opacity .35s ease;
+    transform: translateX(14px);
+    transition: opacity .3s ease, transform .32s cubic-bezier(.22,1,.36,1);
     overflow-y:auto;
   }
-  .screen.active{ opacity:1; pointer-events:auto; }
+  .screen.active{ opacity:1; pointer-events:auto; transform: translateX(0); }
 
-  .pad{ padding:26px 22px 32px; }
+  .pad{ padding:20px 20px 30px; }
 
-  .reward-card{
-    background: linear-gradient(135deg, #FFF7E8, #FFEFD1);
-    border:1px solid #F4E2AE;
-    border-radius:18px;
-    padding:22px 20px;
-    text-align:center;
-    margin-bottom:26px;
+  /* ---------- intro ---------- */
+  .invite-chip{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11px; color:var(--sub);
+    background:#F6F6F9; border-radius:20px;
+    padding:6px 12px; margin-bottom:18px;
   }
-  .reward-label{ font-size:12.5px; color:var(--sub); font-weight:500; margin-bottom:6px; }
-  .reward-amount{ font-size:38px; font-weight:900; color:#B9860A; }
-  .reward-amount span{ font-size:20px; margin-left:2px; }
-  .reward-note{ margin-top:8px; font-size:11.5px; color:var(--sub); }
+  .invite-chip b{ color:var(--ink); }
+  .intro-icon{
+    font-size:42px;
+    margin-bottom:14px;
+    animation: bounce 2.4s ease-in-out infinite;
+  }
+  @keyframes bounce{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+  h1.intro-title{
+    font-size:19px;
+    font-weight:900;
+    line-height:1.55;
+    margin-bottom:9px;
+  }
+  p.intro-sub{
+    font-size:13px;
+    color:var(--sub);
+    line-height:1.75;
+    margin-bottom:22px;
+  }
+  .trust-row{
+    display:flex; gap:7px; margin-bottom:22px; flex-wrap:wrap;
+  }
+  .trust-chip{
+    font-size:10.5px; color:var(--sub);
+    border:1px solid var(--line); border-radius:20px;
+    padding:6px 10px;
+  }
+  .other-rewards{
+    border-top:1px solid var(--line);
+    margin-top:6px;
+    padding-top:16px;
+  }
+  .other-rewards .section-title{ margin-bottom:10px; }
+  .other-item{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 0;
+    opacity:.5;
+  }
+  .other-item .ic{
+    width:32px; height:32px; border-radius:9px;
+    background:#F0F0F3;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px;
+  }
+  .other-item .info{ flex:1; }
+  .other-item .info .t{ font-size:12.5px; font-weight:700; }
+  .other-item .info .s{ font-size:10.5px; color:var(--sub2); margin-top:1px; }
+  .other-item .st{
+    font-size:10px; color:var(--sub2);
+    border:1px solid var(--line); border-radius:20px;
+    padding:3px 8px;
+  }
 
+  /* ---------- shared sections ---------- */
   .section-title{
-    font-size:13.5px;
+    font-size:13px;
     font-weight:700;
     color:var(--sub);
     margin-bottom:12px;
   }
+  .reward-card{
+    background: linear-gradient(135deg, #FFF7E8, #FFEFD1);
+    border:1px solid #F4E2AE;
+    border-radius:18px;
+    padding:20px 18px;
+    text-align:center;
+    margin-bottom:24px;
+  }
+  .reward-label{ font-size:12px; color:var(--sub); font-weight:500; margin-bottom:6px; }
+  .reward-amount{ font-size:36px; font-weight:900; color:#B9860A; }
+  .reward-amount span{ font-size:19px; margin-left:2px; }
+  .reward-note{ margin-top:8px; font-size:11px; color:var(--sub); }
+
+  /* ---------- terms ---------- */
+  .terms-box{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:15px;
+    font-size:11.5px;
+    color:var(--sub);
+    line-height:1.85;
+    height:170px;
+    overflow-y:auto;
+    margin-bottom:18px;
+  }
+  .agree-row{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 4px;
+    cursor:pointer;
+  }
+  .agree-row input{ width:18px; height:18px; accent-color: var(--pp-red); flex-shrink:0; }
+  .agree-row span{ font-size:13px; font-weight:700; }
+  .verify-note{
+    display:flex; align-items:flex-start; gap:8px;
+    font-size:11px; color:var(--sub);
+    background:#F6F6F9; border-radius:10px;
+    padding:10px 12px; margin-top:14px; line-height:1.6;
+  }
+
+  /* ---------- method select ---------- */
   .method-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:12px;
+    gap:11px;
     margin-bottom:8px;
   }
   .method-card{
     border:1.5px solid var(--line);
     border-radius:14px;
-    padding:16px 12px;
+    padding:15px 10px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -126,69 +249,85 @@
     cursor:pointer;
     background:#fff;
     position:relative;
-    transition: border-color .15s ease, transform .1s ease;
+    transition: border-color .15s ease, box-shadow .15s ease;
   }
   .method-card .ic{
-    width:38px; height:38px;
+    width:36px; height:36px;
     border-radius:10px;
     display:flex; align-items:center; justify-content:center;
-    font-size:19px;
+    font-size:18px;
     color:#fff;
     font-weight:900;
   }
-  .method-card .lb{ font-size:12.5px; font-weight:700; }
+  .method-card .lb{ font-size:12px; font-weight:700; }
   .method-card.selected{ border-color: var(--pp-red); box-shadow: 0 0 0 3px rgba(255,0,51,.08); }
   .method-card .ic.paypay{ background: var(--pp-red); }
   .method-card .ic.amazon{ background:#232F3E; }
   .method-card .ic.dpoint{ background:#E6006E; }
   .method-card .ic.bank{ background:#4C6EF5; }
+  .reco-badge{
+    position:absolute; top:-8px; left:50%; transform:translateX(-50%);
+    background: var(--navy); color:#fff;
+    font-size:9px; font-weight:700;
+    padding:2px 8px; border-radius:10px;
+    white-space:nowrap;
+  }
   .check-dot{
     position:absolute; top:8px; right:8px;
     width:16px; height:16px;
     border-radius:50%;
     background: var(--pp-red);
     color:#fff;
-    font-size:10px;
+    font-size:9.5px;
     display:none;
     align-items:center; justify-content:center;
   }
   .method-card.selected .check-dot{ display:flex; }
 
+  /* ---------- buttons / fine ---------- */
   .primary-btn{
     font-family:inherit;
     font-weight:700;
-    font-size:15.5px;
+    font-size:15px;
     color:#fff;
     background: var(--pp-red);
     border:none;
-    padding:16px;
+    padding:15px;
     border-radius:14px;
     width:100%;
     cursor:pointer;
     margin-top:18px;
+    transition: background .15s ease, opacity .15s ease, transform .1s ease;
   }
-  .primary-btn:active{ background: var(--pp-red-deep); }
+  .primary-btn:active{ background: var(--pp-red-deep); transform: scale(.99); }
   .primary-btn[disabled]{ background:#D8D8DE; cursor:not-allowed; }
-
+  .ghost-btn{
+    font-family:inherit; font-weight:700; font-size:13px;
+    color:var(--sub); background:none; border:none;
+    padding:12px; width:100%; cursor:pointer; margin-top:6px;
+  }
   .fine{
-    margin-top:16px;
-    font-size:10.5px;
-    color:var(--sub);
+    margin-top:14px;
+    font-size:10px;
+    color:var(--sub2);
     text-align:center;
-    line-height:1.6;
+    line-height:1.7;
   }
 
-  .confirm-title{ font-size:17px; font-weight:700; margin-bottom:22px; }
+  /* ---------- confirm ---------- */
+  .confirm-title{ font-size:16.5px; font-weight:900; margin-bottom:20px; }
   .row{
     display:flex; justify-content:space-between; align-items:center;
-    padding:14px 0;
+    padding:13px 0;
     border-bottom:1px solid var(--line);
-    font-size:14px;
+    font-size:13.5px;
   }
   .row .k{ color:var(--sub); }
   .row .v{ font-weight:700; }
-  .row .v.big{ font-size:19px; color: var(--pp-red); }
+  .row .v.big{ font-size:18px; color: var(--pp-red); }
+  .row .v.mono{ font-family: ui-monospace, 'SF Mono', monospace; font-size:12px; }
 
+  /* ---------- processing ---------- */
   .proc-wrap{
     flex:1;
     display:flex;
@@ -197,40 +336,56 @@
     justify-content:center;
     padding:20px;
   }
-  .ring-wrap{ position:relative; width:150px; height:150px; margin-bottom:26px; }
-  svg.ring{ transform: rotate(-90deg); width:150px; height:150px; }
-  .ring-track{ fill:none; stroke: var(--line); stroke-width:9; }
+  .ring-wrap{ position:relative; width:144px; height:144px; margin-bottom:24px; }
+  .ring-wrap.small{ width:88px; height:88px; margin-bottom:16px; }
+  svg.ring{ transform: rotate(-90deg); width:100%; height:100%; }
+  .ring-track{ fill:none; stroke: var(--line); stroke-width:8; }
   .ring-bar{
-    fill:none; stroke: var(--pp-red); stroke-width:9; stroke-linecap:round;
-    stroke-dasharray: 424.1;
-    stroke-dashoffset: 424.1;
-    transition: stroke-dashoffset .2s linear;
+    fill:none; stroke: var(--pp-red); stroke-width:8; stroke-linecap:round;
+    stroke-dasharray: 407.2;
+    stroke-dashoffset: 407.2;
   }
-  .ring-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:900; }
-  .proc-step{ font-size:14.5px; font-weight:700; margin-bottom:6px; text-align:center; }
-  .proc-note{ font-size:12px; color:var(--sub); text-align:center; }
+  .ring-bar.thin{ stroke-width:6; }
+  .ring-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900; }
+  .ring-center.small{ font-size:16px; }
+  .proc-step{ font-size:14px; font-weight:700; margin-bottom:5px; text-align:center; min-height:20px; }
+  .proc-note{ font-size:11.5px; color:var(--sub); text-align:center; }
+  .proc-log{
+    margin-top:22px; width:100%;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  .proc-log-item{
+    display:flex; align-items:center; gap:8px;
+    font-size:11px; color:var(--sub2);
+    opacity:0; transform: translateY(4px);
+    transition: opacity .3s ease, transform .3s ease, color .3s ease;
+  }
+  .proc-log-item.done{ opacity:1; transform:translateY(0); color:var(--sub); }
+  .proc-log-item .dot{ width:5px; height:5px; border-radius:50%; background: var(--line); flex-shrink:0; }
+  .proc-log-item.done .dot{ background: var(--green); }
 
   .check-pop{
-    width:64px; height:64px;
+    width:60px; height:60px;
     border-radius:50%;
     background: var(--green);
     display:flex; align-items:center; justify-content:center;
-    color:#fff; font-size:32px;
-    margin-bottom:18px;
+    color:#fff; font-size:28px;
+    margin-bottom:16px;
     transform: scale(0);
   }
   .check-pop.show{ animation: popIn .4s cubic-bezier(.2,1.5,.4,1) forwards; }
   @keyframes popIn{ to{ transform: scale(1); } }
 
+  /* ---------- gotcha ---------- */
   .screen.gotcha{ align-items:center; justify-content:center; }
   .gotcha-wrap{ display:flex; flex-direction:column; align-items:center; padding:20px; }
   .stamp{
     font-family:'M PLUS Rounded 1c', sans-serif;
-    font-size: clamp(46px, 14vw, 64px);
+    font-size: clamp(42px, 13vw, 60px);
     font-weight:900;
     color: var(--navy);
     background: var(--gold);
-    padding: 4px 26px;
+    padding: 4px 24px;
     border-radius:14px;
     transform: scale(0) rotate(-7deg);
     box-shadow: 0 10px 0 rgba(0,0,0,.15), 0 18px 34px rgba(0,0,0,.28);
@@ -243,8 +398,8 @@
     100%{ transform: scale(1) rotate(-7deg); }
   }
   .gotcha-sub{
-    margin-top:20px;
-    font-size:14.5px;
+    margin-top:18px;
+    font-size:14px;
     font-weight:700;
     opacity:0;
     text-align:center;
@@ -252,11 +407,11 @@
   }
   .gotcha-sub.show{ animation: fadeUp .5s ease forwards; }
   @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-  .btn-row{ margin-top:26px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; opacity:0; }
+  .btn-row{ margin-top:24px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; opacity:0; }
   .btn-row.show{ animation: fadeUp .5s ease .15s forwards; }
   .btn-sm{
-    font-family:inherit; font-weight:700; font-size:13px;
-    padding:12px 18px; border-radius:40px; border:1.5px solid var(--line);
+    font-family:inherit; font-weight:700; font-size:12.5px;
+    padding:11px 17px; border-radius:40px; border:1.5px solid var(--line);
     background:#fff; color:var(--ink); cursor:pointer;
   }
   .btn-sm.solid{ background: var(--pp-red); color:#fff; border-color:var(--pp-red); }
@@ -272,6 +427,57 @@
     90%{ transform: translateX(2px); }
   }
 
+  /* ---------- footer ---------- */
+  .app-footer{
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-size:9.5px;
+    color:var(--sub2);
+    border-top:1px solid var(--line);
+    background:#fff;
+    flex-shrink:0;
+  }
+  .app-footer a{ color:var(--sub2); text-decoration:none; }
+  .app-footer a:hover{ text-decoration:underline; }
+
+  /* ---------- modals ---------- */
+  .modal{
+    position:absolute;
+    inset:0;
+    background:#fff;
+    z-index:30;
+    display:flex;
+    flex-direction:column;
+    transform: translateX(100%);
+    transition: transform .32s cubic-bezier(.22,1,.36,1);
+  }
+  .modal.open{ transform: translateX(0); }
+  .modal-header{
+    display:flex; align-items:center; gap:12px;
+    padding:16px 18px;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .modal-back{
+    background:none; border:none; font-size:18px;
+    cursor:pointer; color:var(--ink); padding:4px;
+    line-height:1;
+  }
+  .modal-title{ font-weight:700; font-size:14px; }
+  .modal-body{ padding:20px; overflow-y:auto; flex:1; }
+  .faq-item{ margin-bottom:19px; }
+  .faq-q{ font-weight:700; font-size:13px; margin-bottom:6px; display:flex; gap:8px; }
+  .faq-q .qmark{ color:var(--pp-red); flex-shrink:0; }
+  .faq-a{ font-size:12px; color:var(--sub); line-height:1.75; padding-left:21px; }
+  .support-card{ border:1px solid var(--line); border-radius:14px; padding:15px; margin-bottom:14px; }
+  .support-card .sc-label{ font-size:11px; color:var(--sub); margin-bottom:4px; }
+  .support-card .sc-value{ font-size:13.5px; font-weight:700; }
+  .support-hours{ font-size:11px; color:var(--sub); margin-top:4px; }
+  .support-note{ font-size:11px; color:var(--sub); line-height:1.8; margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+
   .toast{
     position:fixed; bottom:26px; left:50%;
     transform: translateX(-50%) translateY(20px);
@@ -285,95 +491,263 @@
 <body>
 
 <div class="stage" id="stage">
-<div class="app" id="app">
+<div class="phone" id="app">
 
-  <div class="appbar">
-    <div class="mark">P</div>
-    <div class="name">クライムドットコム</div>
-    <div class="badge">未受取あり</div>
-  </div>
+  <div class="app">
 
-  <!-- SCREEN 1 : select method -->
-  <div class="screen active" id="screen-select">
-    <div class="pad">
-      <div class="reward-card">
-        <div class="reward-label">受け取り可能な特典</div>
-        <div class="reward-amount">5,000<span>円相当</span></div>
-        <div class="reward-note">有効期限：本日23:59まで</div>
+    <div class="appbar">
+      <div class="mark">C</div>
+      <div class="name">クライムドットコム</div>
+      <div class="badge">未受取 1件</div>
+    </div>
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot" data-step="0"></div>
+      <div class="dot" data-step="1"></div>
+      <div class="dot" data-step="2"></div>
+      <div class="dot" data-step="3"></div>
+      <div class="dot" data-step="4"></div>
+    </div>
+
+    <div class="screen-container">
+
+      <!-- SCREEN 0 : intro -->
+      <div class="screen active" id="screen-intro">
+        <div class="pad">
+          <div class="invite-chip">👤 <b>友達</b>からの招待経由で発生</div>
+          <div class="intro-icon">🎁</div>
+          <h1 class="intro-title">受け取り可能な特典があります</h1>
+          <p class="intro-sub">招待リンク経由で特典が発生しています。以下の手順で受け取り手続きを進めてください。所要時間は約1分です。</p>
+          <div class="trust-row">
+            <div class="trust-chip">🔒 SSL通信</div>
+            <div class="trust-chip">✅ 手数料無料</div>
+            <div class="trust-chip">⏱ 最短即日</div>
+          </div>
+          <button class="primary-btn" id="btn-to-terms">受け取り手続きを始める</button>
+          <div class="fine">このページはブラウザ上で完結し、外部への情報送信は行われません。</div>
+
+          <div class="other-rewards">
+            <div class="section-title">その他の特典</div>
+            <div class="other-item">
+              <div class="ic">🎟</div>
+              <div class="info"><div class="t">友達紹介キャンペーン特典</div><div class="s">2026/06/12 受け取り済み</div></div>
+              <div class="st">完了</div>
+            </div>
+            <div class="other-item">
+              <div class="ic">🎫</div>
+              <div class="info"><div class="t">初回登録特典</div><div class="s">2026/05/03 期限切れ</div></div>
+              <div class="st">期限切れ</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="section-title">受け取り方法を選択してください</div>
-      <div class="method-grid">
-        <div class="method-card selected" data-method="paypay">
-          <div class="check-dot">✓</div>
-          <div class="ic paypay">P</div>
-          <div class="lb">PayPay</div>
+      <!-- SCREEN 1 : terms -->
+      <div class="screen" id="screen-terms">
+        <div class="pad">
+          <div class="section-title">利用規約への同意</div>
+          <div class="terms-box">
+            第1条（本サービス）<br>
+            本サービスは、特典の受け取り手続きを行うためのものです。<br><br>
+            第2条（受け取り）<br>
+            受け取り手続きが完了した時点で、特典の付与が確定するものとします。<br><br>
+            第3条（免責）<br>
+            本サービスの利用によって生じたいかなる損害についても、運営者は責任を負わないものとします。<br><br>
+            第4条（有効期限）<br>
+            特典には有効期限が設定されている場合があります。<br><br>
+            第5条（不正利用）<br>
+            不正な方法による受け取りが確認された場合、特典を無効とすることがあります。
+          </div>
+          <label class="agree-row">
+            <input type="checkbox" id="agree-check">
+            <span>利用規約に同意する</span>
+          </label>
+          <div class="verify-note">ℹ️ このステップでは氏名・電話番号などの入力は必要ありません。</div>
+          <button class="primary-btn" id="btn-to-select" disabled>同意して次へ</button>
         </div>
-        <div class="method-card" data-method="amazon">
-          <div class="check-dot">✓</div>
-          <div class="ic amazon">a</div>
-          <div class="lb">Amazon</div>
-        </div>
-        <div class="method-card" data-method="dpoint">
-          <div class="check-dot">✓</div>
-          <div class="ic dpoint">d</div>
-          <div class="lb">dポイント</div>
-        </div>
-        <div class="method-card" data-method="bank">
-          <div class="check-dot">✓</div>
-          <div class="ic bank">￥</div>
-          <div class="lb">銀行振込</div>
+      </div>
+
+      <!-- SCREEN 2 : select method -->
+      <div class="screen" id="screen-select">
+        <div class="pad">
+          <div class="reward-card">
+            <div class="reward-label">受け取り可能な特典</div>
+            <div class="reward-amount">2,450<span>円相当</span></div>
+            <div class="reward-note">有効期限：本日23:59まで</div>
+          </div>
+
+          <div class="section-title">受け取り方法を選択してください</div>
+          <div class="method-grid">
+            <div class="method-card selected" data-method="paypay">
+              <div class="reco-badge">おすすめ</div>
+              <div class="check-dot">✓</div>
+              <div class="ic paypay">P</div>
+              <div class="lb">PayPay</div>
+            </div>
+            <div class="method-card" data-method="amazon">
+              <div class="check-dot">✓</div>
+              <div class="ic amazon">a</div>
+              <div class="lb">Amazon</div>
+            </div>
+            <div class="method-card" data-method="dpoint">
+              <div class="check-dot">✓</div>
+              <div class="ic dpoint">d</div>
+              <div class="lb">dポイント</div>
+            </div>
+            <div class="method-card" data-method="bank">
+              <div class="check-dot">✓</div>
+              <div class="ic bank">￥</div>
+              <div class="lb">銀行振込</div>
+            </div>
+          </div>
+
+          <button class="primary-btn" id="btn-to-confirm">この方法で受け取る</button>
+          <div class="fine" id="select-fine">受け取りにはPayPayアカウントとの連携が必要です。手数料は発生しません。</div>
         </div>
       </div>
 
-      <button class="primary-btn" id="btn-to-confirm">この方法で受け取る</button>
-      <div class="fine" id="select-fine">受け取りにはPayPayアカウントとの連携が必要です。手数料は発生しません。</div>
-    </div>
-  </div>
-
-  <!-- SCREEN 2 : confirm -->
-  <div class="screen" id="screen-confirm">
-    <div class="pad">
-      <div class="confirm-title">受け取り内容の確認</div>
-      <div class="row"><div class="k">受取方法</div><div class="v" id="confirm-method">PayPay残高</div></div>
-      <div class="row"><div class="k">受取金額</div><div class="v big">5,000円</div></div>
-      <div class="row"><div class="k">手数料</div><div class="v">0円</div></div>
-      <div class="row"><div class="k">受取予定日</div><div class="v" id="confirm-date">本日中</div></div>
-      <button class="primary-btn" id="btn-to-process">内容を確認して受け取る</button>
-      <div class="fine" id="confirm-fine">「受け取る」を押すとPayPay残高への送金処理が開始されます。</div>
-    </div>
-  </div>
-
-  <!-- SCREEN 3 : processing -->
-  <div class="screen" id="screen-process">
-    <div class="proc-wrap">
-      <div id="ring-area">
-        <div class="ring-wrap">
-          <svg class="ring" viewBox="0 0 150 150">
-            <circle class="ring-track" cx="75" cy="75" r="67.5"></circle>
-            <circle class="ring-bar" id="ring-bar" cx="75" cy="75" r="67.5"></circle>
-          </svg>
-          <div class="ring-center" id="percent-label">0%</div>
+      <!-- SCREEN 3 : confirm -->
+      <div class="screen" id="screen-confirm">
+        <div class="pad">
+          <div class="confirm-title">受け取り内容の確認</div>
+          <div class="row"><div class="k">受取方法</div><div class="v" id="confirm-method">PayPay残高</div></div>
+          <div class="row"><div class="k">受取金額</div><div class="v big">2,450円</div></div>
+          <div class="row"><div class="k">手数料</div><div class="v">0円</div></div>
+          <div class="row"><div class="k">受取予定日</div><div class="v" id="confirm-date">本日中</div></div>
+          <div class="row"><div class="k">受付番号</div><div class="v mono" id="confirm-receipt">-</div></div>
+          <div class="row"><div class="k">受付日時</div><div class="v mono" id="confirm-time">-</div></div>
+          <button class="primary-btn" id="btn-to-review">内容を確認して受け取る</button>
+          <button class="ghost-btn" id="btn-back-to-select">方法を選び直す</button>
+          <div class="fine" id="confirm-fine">「受け取る」を押すとPayPay残高への送金処理が開始されます。審査完了まで通常1〜2分かかります。</div>
         </div>
       </div>
-      <div class="check-pop" id="check-pop">✓</div>
-      <div class="proc-step" id="step-label">送金処理を開始しています</div>
-      <div class="proc-note" id="proc-note">画面を閉じずにお待ちください</div>
-    </div>
-  </div>
 
-  <!-- SCREEN 4 : gotcha -->
-  <div class="screen gotcha" id="screen-gotcha">
-    <div class="gotcha-wrap">
-      <div class="stamp" id="stamp">うそです</div>
-      <div class="gotcha-sub" id="gotcha-sub">びっくりした？ ただのネタサイトです🙏</div>
-      <div class="btn-row" id="btn-row">
-        <button class="btn-sm solid" id="btn-retry">もう一回だまされる</button>
-        <button class="btn-sm" id="btn-share">リンクをコピーして人をだます</button>
+      <!-- SCREEN 4a : quick pre-check -->
+      <div class="screen" id="screen-review">
+        <div class="proc-wrap">
+          <div class="ring-wrap small">
+            <svg class="ring" viewBox="0 0 96 96">
+              <circle class="ring-track" cx="48" cy="48" r="42"></circle>
+              <circle class="ring-bar thin" id="review-ring-bar" cx="48" cy="48" r="42"></circle>
+            </svg>
+            <div class="ring-center small">🔎</div>
+          </div>
+          <div class="proc-step">受け取り内容を審査しています</div>
+          <div class="proc-note">しばらくお待ちください</div>
+        </div>
       </div>
-    </div>
-  </div>
 
+      <!-- SCREEN 4b : processing -->
+      <div class="screen" id="screen-process">
+        <div class="proc-wrap">
+          <div id="ring-area">
+            <div class="ring-wrap">
+              <svg class="ring" viewBox="0 0 144 144">
+                <circle class="ring-track" cx="72" cy="72" r="64.8"></circle>
+                <circle class="ring-bar" id="ring-bar" cx="72" cy="72" r="64.8"></circle>
+              </svg>
+              <div class="ring-center" id="percent-label">0%</div>
+            </div>
+          </div>
+          <div class="check-pop" id="check-pop">✓</div>
+          <div class="proc-step" id="step-label">送金処理を開始しています</div>
+          <div class="proc-note" id="proc-note">画面を閉じずにお待ちください</div>
+          <div class="proc-log" id="proc-log"></div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5 : gotcha -->
+      <div class="screen gotcha" id="screen-gotcha">
+        <div class="gotcha-wrap">
+          <div class="stamp" id="stamp">うそです</div>
+          <div class="gotcha-sub" id="gotcha-sub">びっくりした？ ただのネタサイトです🙏</div>
+          <div class="btn-row" id="btn-row">
+            <button class="btn-sm solid" id="btn-retry">もう一回だまされる</button>
+            <button class="btn-sm" id="btn-share">リンクをコピーして人をだます</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL : FAQ -->
+      <div class="modal" id="modal-faq">
+        <div class="modal-header">
+          <button class="modal-back" id="faq-back">←</button>
+          <div class="modal-title">よくある質問</div>
+        </div>
+        <div class="modal-body">
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>受け取りにはどれくらい時間がかかりますか？</div>
+            <div class="faq-a">通常、審査から着金まで1〜2分程度で完了します。混雑状況により前後する場合があります。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>手数料はかかりますか？</div>
+            <div class="faq-a">手数料は一切かかりません。表示されている金額がそのまま受け取り金額となります。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>受け取り方法は後から変更できますか？</div>
+            <div class="faq-a">確認画面の「方法を選び直す」から、送金処理を始める前であれば変更できます。処理開始後は変更できません。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>特典に有効期限はありますか？</div>
+            <div class="faq-a">はい。特典には有効期限が設定されており、期限を過ぎると受け取りができなくなる場合があります。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>複数回受け取ることはできますか？</div>
+            <div class="faq-a">お一人様1回までとなります。複数回の受け取りはできません。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>本人確認の書類提出は必要ですか？</div>
+            <div class="faq-a">本サービスでは、氏名・電話番号・本人確認書類の提出は一切必要ありません。入力を求められた場合はご注意ください。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>受け取りに失敗した場合はどうすればいいですか？</div>
+            <div class="faq-a">通信環境の良い場所で、時間をおいて再度お試しください。改善しない場合はサポートまでご連絡ください。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q"><span class="qmark">Q.</span>招待してくれた友達にはどう表示されますか？</div>
+            <div class="faq-a">招待した側には、受け取りが完了したかどうかの状況のみが共有されます。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL : Support -->
+      <div class="modal" id="modal-support">
+        <div class="modal-header">
+          <button class="modal-back" id="support-back">←</button>
+          <div class="modal-title">サポート</div>
+        </div>
+        <div class="modal-body">
+          <div class="support-card">
+            <div class="sc-label">受付時間</div>
+            <div class="sc-value">10:00 〜 18:00（土日祝を除く）</div>
+            <div class="support-hours">お問い合わせが集中している場合、回答までお時間をいただくことがあります。</div>
+          </div>
+          <div class="support-card">
+            <div class="sc-label">お問い合わせの前に</div>
+            <div class="sc-value">よくある質問をご確認ください</div>
+            <div class="support-hours">多くのご質問は「よくある質問」ページで解決できます。</div>
+          </div>
+          <div class="support-card">
+            <div class="sc-label">ご連絡の際に必要な情報</div>
+            <div class="sc-value">受付番号（確認画面に表示）</div>
+            <div class="support-hours">受付番号をお手元にご用意いただくとスムーズにご案内できます。</div>
+          </div>
+          <div class="support-note">
+            ※このページはジョーク目的で作成された架空のサービスです。実在の企業・サービスとは関係ありません。
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="app-footer">
+      <span>© 2026 クライムドットコム</span>
+      <span>・</span>
+      <a href="#" id="footer-faq">よくある質問</a>
+      <span>・</span>
+      <a href="#" id="footer-support">サポート</a>
+    </div>
+
+  </div>
 </div>
 </div>
 
@@ -381,12 +755,16 @@
 
 <script>
 const screens = {
+  intro: document.getElementById('screen-intro'),
+  terms: document.getElementById('screen-terms'),
   select: document.getElementById('screen-select'),
   confirm: document.getElementById('screen-confirm'),
+  review: document.getElementById('screen-review'),
   process: document.getElementById('screen-process'),
   gotcha: document.getElementById('screen-gotcha'),
 };
-const app = document.getElementById('app');
+const appEl = document.getElementById('app');
+const dots = document.querySelectorAll('.progress-dots .dot');
 
 const ringBar = document.getElementById('ring-bar');
 const percentLabel = document.getElementById('percent-label');
@@ -394,18 +772,23 @@ const ringArea = document.getElementById('ring-area');
 const checkPop = document.getElementById('check-pop');
 const stepLabel = document.getElementById('step-label');
 const procNote = document.getElementById('proc-note');
+const procLog = document.getElementById('proc-log');
 const stamp = document.getElementById('stamp');
 const gotchaSub = document.getElementById('gotcha-sub');
 const btnRow = document.getElementById('btn-row');
+const reviewRingBar = document.getElementById('review-ring-bar');
 
-const CIRC = 424.1;
+const CIRC = 407.2;
+const CIRC_SMALL = 263.9;
+
+const dotStepMap = { intro:0, terms:1, select:2, confirm:3, review:4, process:4, gotcha:4 };
 
 const methodsData = {
   paypay: {
     confirmLabel: "PayPay残高",
     date: "本日中",
     selectFine: "受け取りにはPayPayアカウントとの連携が必要です。手数料は発生しません。",
-    confirmFine: "「受け取る」を押すとPayPay残高への送金処理が開始されます。",
+    confirmFine: "「受け取る」を押すとPayPay残高への送金処理が開始されます。審査完了まで通常1〜2分かかります。",
     steps: [
       "本人情報を確認しています",
       "PayPayアカウントと連携しています",
@@ -413,7 +796,7 @@ const methodsData = {
       "着金を確認しています"
     ],
     doneStep: "受け取りが完了しました",
-    doneNote: "5,000円をPayPay残高に反映しました"
+    doneNote: "2,450円をPayPay残高に反映しました"
   },
   amazon: {
     confirmLabel: "Amazonギフト券",
@@ -427,7 +810,7 @@ const methodsData = {
       "コードを送信しています"
     ],
     doneStep: "受け取りが完了しました",
-    doneNote: "5,000円分のAmazonギフト券コードを発行しました"
+    doneNote: "2,450円分のAmazonギフト券コードを発行しました"
   },
   dpoint: {
     confirmLabel: "dポイント",
@@ -441,7 +824,7 @@ const methodsData = {
       "付与状況を確認しています"
     ],
     doneStep: "受け取りが完了しました",
-    doneNote: "5,000ポイントをdポイントに付与しました"
+    doneNote: "2,450ポイントをdポイントに付与しました"
   },
   bank: {
     confirmLabel: "銀行振込",
@@ -455,7 +838,7 @@ const methodsData = {
       "手続き完了を確認しています"
     ],
     doneStep: "手続きが完了しました",
-    doneNote: "5,000円を指定の口座へ振込手続きしました"
+    doneNote: "2,450円を指定の口座へ振込手続きしました"
   }
 };
 
@@ -466,6 +849,8 @@ const selectFineEl = document.getElementById('select-fine');
 const confirmMethodEl = document.getElementById('confirm-method');
 const confirmDateEl = document.getElementById('confirm-date');
 const confirmFineEl = document.getElementById('confirm-fine');
+const confirmReceiptEl = document.getElementById('confirm-receipt');
+const confirmTimeEl = document.getElementById('confirm-time');
 
 methodCards.forEach(card => {
   card.addEventListener('click', () => {
@@ -476,6 +861,15 @@ methodCards.forEach(card => {
   });
 });
 
+function generateReceiptNumber(){
+  const n = Math.floor(1000000 + Math.random() * 8999999);
+  return 'CL-' + n;
+}
+function formatNow(){
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}/${pad(d.getMonth()+1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
 let audioCtx;
 function beep(freq, dur, type='sine', vol=.08, delay=0){
   try{
@@ -494,20 +888,59 @@ function beep(freq, dur, type='sine', vol=.08, delay=0){
 }
 function playChime(){ [0,.09].forEach((d,i)=> beep(760+i*220, .16, 'sine', .05, d)); }
 function playBuzz(){ beep(150, .45, 'sawtooth', .09, 0); }
+function playTick(){ beep(500, .04, 'square', .025, 0); }
 
 function showScreen(key){
   Object.values(screens).forEach(s => s.classList.remove('active'));
   screens[key].classList.add('active');
+  const activeStep = dotStepMap[key];
+  dots.forEach((d,i) => d.classList.toggle('done', i <= activeStep));
 }
+
+document.getElementById('btn-to-terms').addEventListener('click', () => showScreen('terms'));
+
+const agreeCheck = document.getElementById('agree-check');
+const btnToSelect = document.getElementById('btn-to-select');
+agreeCheck.addEventListener('change', () => {
+  btnToSelect.disabled = !agreeCheck.checked;
+});
+btnToSelect.addEventListener('click', () => showScreen('select'));
 
 document.getElementById('btn-to-confirm').addEventListener('click', () => {
   const m = methodsData[selectedMethod];
   confirmMethodEl.textContent = m.confirmLabel;
   confirmDateEl.textContent = m.date;
   confirmFineEl.textContent = m.confirmFine;
+  confirmReceiptEl.textContent = generateReceiptNumber();
+  confirmTimeEl.textContent = formatNow();
   showScreen('confirm');
 });
-document.getElementById('btn-to-process').addEventListener('click', startProcessing);
+document.getElementById('btn-back-to-select').addEventListener('click', () => showScreen('select'));
+
+document.getElementById('btn-to-review').addEventListener('click', () => {
+  showScreen('review');
+  reviewRingBar.style.strokeDashoffset = CIRC_SMALL;
+  runIrregularProgress({
+    circumference: CIRC_SMALL,
+    barEl: reviewRingBar,
+    onTick: null,
+    minInc: 8, maxInc: 22,
+    burstChance: 0.2, burstMin: 20, burstMax: 35,
+    stallChance: 0.12, stallMin: 400, stallMax: 900,
+    baseDelayMin: 90, baseDelayMax: 260,
+    onDone: startProcessing
+  });
+});
+
+function buildProcLog(steps){
+  procLog.innerHTML = '';
+  steps.forEach((s) => {
+    const item = document.createElement('div');
+    item.className = 'proc-log-item';
+    item.innerHTML = `<span class="dot"></span><span>${s}</span>`;
+    procLog.appendChild(item);
+  });
+}
 
 function startProcessing(){
   showScreen('process');
@@ -518,32 +951,62 @@ function startProcessing(){
   procNote.textContent = '画面を閉じずにお待ちください';
 
   const steps = methodsData[selectedMethod].steps;
-  let stepIndex = 0;
+  buildProcLog(steps);
+  const logItems = procLog.querySelectorAll('.proc-log-item');
+  let stepIndex = -1;
   stepLabel.textContent = steps[0];
 
-  const totalDuration = 4400;
-  const start = performance.now();
+  runIrregularProgress({
+    circumference: CIRC,
+    barEl: ringBar,
+    onTick: (progress) => {
+      percentLabel.textContent = Math.floor(progress) + '%';
+      const newStepIndex = Math.min(steps.length - 1, Math.floor((progress/100) * steps.length));
+      if(newStepIndex !== stepIndex){
+        stepIndex = newStepIndex;
+        stepLabel.textContent = steps[stepIndex];
+        logItems[stepIndex].classList.add('done');
+        playTick();
+      }
+    },
+    minInc: 1.5, maxInc: 6,
+    burstChance: 0.14, burstMin: 10, burstMax: 24,
+    stallChance: 0.12, stallMin: 500, stallMax: 1500,
+    baseDelayMin: 120, baseDelayMax: 420,
+    onDone: finishProcessing
+  });
+}
 
-  function tick(now){
-    const elapsed = now - start;
-    const progress = Math.min(100, (elapsed / totalDuration) * 100);
+function runIrregularProgress(opts){
+  let progress = 0;
+  const {
+    circumference, barEl, onTick,
+    minInc, maxInc, burstChance, burstMin, burstMax,
+    stallChance, stallMin, stallMax,
+    baseDelayMin, baseDelayMax, onDone
+  } = opts;
 
-    ringBar.style.strokeDashoffset = CIRC - (CIRC * progress / 100);
-    percentLabel.textContent = Math.floor(progress) + '%';
+  function rand(min, max){ return Math.random() * (max - min) + min; }
 
-    const newStepIndex = Math.min(steps.length - 1, Math.floor((progress/100) * steps.length));
-    if(newStepIndex !== stepIndex){
-      stepIndex = newStepIndex;
-      stepLabel.textContent = steps[stepIndex];
+  function step(){
+    let inc = rand(minInc, maxInc);
+    if(Math.random() < burstChance){ inc = rand(burstMin, burstMax); }
+    if(Math.random() < 0.08){ inc = rand(0.2, 1); }
+
+    progress = Math.min(100, progress + inc);
+    barEl.style.strokeDashoffset = circumference - (circumference * progress / 100);
+    if(onTick) onTick(progress);
+
+    if(progress >= 100){
+      onDone();
+      return;
     }
 
-    if(progress < 100){
-      requestAnimationFrame(tick);
-    }else{
-      finishProcessing();
-    }
+    let delay = rand(baseDelayMin, baseDelayMax);
+    if(Math.random() < stallChance){ delay += rand(stallMin, stallMax); }
+    setTimeout(step, delay);
   }
-  requestAnimationFrame(tick);
+  step();
 }
 
 function finishProcessing(){
@@ -552,6 +1015,7 @@ function finishProcessing(){
   checkPop.classList.add('show');
   stepLabel.textContent = m.doneStep;
   procNote.textContent = m.doneNote;
+  procLog.querySelectorAll('.proc-log-item').forEach(i => i.classList.add('done'));
   playChime();
   confettiBurst();
   setTimeout(gotcha, 1000);
@@ -565,9 +1029,9 @@ function confettiBurst(){
 
 function gotcha(){
   showScreen('gotcha');
-  app.classList.add('shake');
+  appEl.classList.add('shake');
   playBuzz();
-  setTimeout(()=> app.classList.remove('shake'), 500);
+  setTimeout(()=> appEl.classList.remove('shake'), 500);
 
   stamp.classList.remove('drop');
   void stamp.offsetWidth;
@@ -587,7 +1051,9 @@ document.getElementById('btn-retry').addEventListener('click', () => {
   document.querySelector('.method-card[data-method="paypay"]').classList.add('selected');
   selectedMethod = 'paypay';
   selectFineEl.textContent = methodsData.paypay.selectFine;
-  showScreen('select');
+  agreeCheck.checked = false;
+  btnToSelect.disabled = true;
+  showScreen('intro');
 });
 
 document.getElementById('btn-share').addEventListener('click', async () => {
@@ -595,6 +1061,21 @@ document.getElementById('btn-share').addEventListener('click', async () => {
   const toast = document.getElementById('toast');
   toast.classList.add('show');
   setTimeout(()=> toast.classList.remove('show'), 1800);
+});
+
+document.getElementById('footer-faq').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('modal-faq').classList.add('open');
+});
+document.getElementById('faq-back').addEventListener('click', () => {
+  document.getElementById('modal-faq').classList.remove('open');
+});
+document.getElementById('footer-support').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('modal-support').classList.add('open');
+});
+document.getElementById('support-back').addEventListener('click', () => {
+  document.getElementById('modal-support').classList.remove('open');
 });
 </script>
 
